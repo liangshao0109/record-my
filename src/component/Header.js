@@ -35,6 +35,9 @@ function Header() {
         const handleClose = () => {
             setAnchorEl(null);
         };
+        const goToCreateRecord = () => {
+            window.location.href = "/create-record";
+        }
 
         return (
             <div>
@@ -94,7 +97,7 @@ function Header() {
                             </ListItemIcon>
                             Profile
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={goToCreateRecord}>
                             <ListItemIcon>
                                 <PostAddTwoToneIcon /> 
                             </ListItemIcon>

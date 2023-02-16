@@ -6,6 +6,7 @@ import {
 import Homepage from './component/Homepage';
 import Header from './component/Header';
 import RecordCreate from './component/RecordCreate';
+import RecordCreateWithType from './component/RecordCreateWithType';
 
 function App() {
 
@@ -17,6 +18,10 @@ function App() {
     {
       path: "/create-record",
       element: <RecordCreate />
+    },
+    {
+      path: "/create-record/:typeId",
+      element: <RecordCreateWithType />
     }
   ]);
 
