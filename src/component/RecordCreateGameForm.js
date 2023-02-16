@@ -9,7 +9,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
-import { useAuthState } from '../utilities/firebase';
+import { useDbData, useDbUpdate } from "../utilities/firebase";
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function RecordCreateGameForm(data) {
     const [gameImageURL, setGameImageUrl] = useState('');
@@ -18,15 +20,19 @@ function RecordCreateGameForm(data) {
     const [gamePlayed, setGamePlayed] = useState(false);
     const [gameCompleted, setGameCompleted] = useState(false);
     const [gameNote, setGameNote] = useState(null);
-    const [user] = useAuthState();
+    const [games, error] = useDbData(`/games/${data.user.uid}`);
+    const [update, result] = useDbUpdate(`/games/`);
 
     useEffect(() => {
-        if(data.game != null){
+        if (data.game != null) {
             setGameImageUrl(data.game.box_art_url);
             setGameName(data.game.name);
         }
     });
-    
+
+    if (error) return <h1>Error loading data: {error.toString()}</h1>;
+    if (games === undefined) return <div><CircularProgress color="inherit" /></div>;
+
     const theme = createTheme({
         palette: {
             white: {
@@ -42,7 +48,31 @@ function RecordCreateGameForm(data) {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        console.log(user);
+        var newGameRecords = [];
+        let uid = data.user.uid
+        // TODO: hadle same game?
+        const game = {
+            "name": gameName,
+            "image_url": gameImageURL,
+            "bought": gameBought,
+            "played": gamePlayed,
+            "completed": gameCompleted,
+            "note": gameNote,
+            "created_at": Date.now(),
+            "updated_at": Date.now()
+        }
+        if (games != null) {
+            newGameRecords = games;
+            newGameRecords.push(game);
+        } else {
+            newGameRecords = [game];
+        }
+
+        update({
+            [uid]: newGameRecords
+        });
+
+        window.location.href = "/create-record";
     }
 
     const handleImageUrlInput = (e) => {
@@ -52,7 +82,7 @@ function RecordCreateGameForm(data) {
     const handleNameInput = (e) => {
         setGameName(e.target.value);
     }
-    
+
     const handleBoughtInput = (e) => {
         setGameBought(JSON.parse(e.target.value));
     }
@@ -69,6 +99,10 @@ function RecordCreateGameForm(data) {
         setGameNote(e.target.value);
     }
 
+    const handleCancel = (e) => {
+        window.location.href = "/create-record";
+    }
+
     return (
         <div className='game-form'>
             <ThemeProvider theme={theme}>
@@ -81,7 +115,7 @@ function RecordCreateGameForm(data) {
                             variant="outlined"
                             color="white"
                             value={gameImageURL}
-                            onChange={handleImageUrlInput}/>
+                            onChange={handleImageUrlInput} />
                         {/* <div className='or'>OR</div> */}
                         {/* TODO: upload image file */}
                     </div>
@@ -93,8 +127,8 @@ function RecordCreateGameForm(data) {
                             label="Game Name"
                             variant="outlined"
                             color="white"
-                            value={gameName} 
-                            onChange={handleNameInput}/>
+                            value={gameName}
+                            onChange={handleNameInput} />
                     </div>
                     <div className='game-form-input'>
                         <FormControl fullWidth>
@@ -148,12 +182,21 @@ function RecordCreateGameForm(data) {
                     </div>
                     <div className='game-form-submit'>
                         <Button
+                            type="button"
+                            variant="outlined"
+                            color="white"
+                            onClick={handleCancel}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
                             type="submit"
                             variant="contained"
                             color="blue"
                         >
                             Submit
                         </Button>
+
                     </div>
 
                 </form>

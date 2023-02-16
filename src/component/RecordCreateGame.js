@@ -9,6 +9,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './RecordCreateGame.css';
 import RecordCreateGameForm from './RecordCreateGameForm';
+import { useAuthState } from '../utilities/firebase';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function RecordCreateGame() {
     const [searchOpen, setSearchOpen] = useState(false);
@@ -17,6 +20,7 @@ function RecordCreateGame() {
     const [searchGameList, setSearchGameList] = useState([]);
     const [selectedGame, setSelectedGame] = useState(null);
     const [choosedGame, setChoosedGame] = useState(null);
+    const [user] = useAuthState();  
 
     const handleSearchClickOpen = () => {
         setSearchOpen(true);
@@ -133,7 +137,9 @@ function RecordCreateGame() {
                 >
                     Search Game
                 </Button>
-                <RecordCreateGameForm game={choosedGame} />
+                {
+                    user ? <RecordCreateGameForm game={choosedGame} user={user} /> : <div><CircularProgress color="inherit" /></div>
+                }
                 <Dialog
                     open={searchOpen}
                     onClose={handleSearchClose}

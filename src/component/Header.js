@@ -45,8 +45,8 @@ function Header() {
 
                     <Tooltip title="Account settings">
                         <ThemeProvider theme={theme}>
-                            <IconButton color="white">
-                                <AccountCircleTwoToneIcon onClick={handleClick} />
+                            <IconButton color="white" onClick={handleClick} >
+                                <AccountCircleTwoToneIcon/>
                             </IconButton>
                         </ThemeProvider>
                     </Tooltip>
