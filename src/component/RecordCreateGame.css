@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 .game-detail{
     display: flex;
     align-items: center;
@@ -19,4 +21,20 @@
 
 .instruction{
     font-size: 20px;;
+}
+
+.dialog .dialog-title, 
+.dialog .dialog-content, 
+.dialog-actions{
+    font-family: 'Itim', cursive;
+    background-color: #8ecccc;
+    color: #50717b;
+}
+
+.dialog-content .dialog-content-text, 
+.dialog-content #title-label, 
+.dialog-content #title, 
+.dialog-actions .dialog-action-btn,
+.record-create-game .search-btn{
+    font-family: 'Itim', cursive;
 }

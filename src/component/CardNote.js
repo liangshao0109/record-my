@@ -33,7 +33,7 @@ function CardNote(data) {
                             horizontal: 'left',
                         }}
                     >
-                        <Typography className='card-note-text' sx={{ p: 2 }}>{data.note}</Typography>
+                        <Typography className='card-note-text'>{data.note}</Typography>
                     </Popover>
                 </div>
                 :

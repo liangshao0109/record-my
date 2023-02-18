@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 .header-banner{
     height: 50px;
     background-color: #50717b;
@@ -30,5 +32,9 @@
 
 .header-banner .profile{
     align-self: center;
+}
+
+#account-menu .menu-item{
+    font-family: 'Itim', cursive;
 }
 

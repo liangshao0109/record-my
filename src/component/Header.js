@@ -46,7 +46,6 @@ function Header() {
         return (
             <div>
                 <div className='profile'>
-
                     <Tooltip title="Account settings">
                         <ThemeProvider theme={theme}>
                             <IconButton color="white" onClick={handleClick} >
@@ -92,29 +91,29 @@ function Header() {
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={handleClose} className="menu-item">
                             Hi, {user.user.displayName}
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={handleClose} className="menu-item">
                             <ListItemIcon>
                                 <AssignmentIndTwoToneIcon /> 
                             </ListItemIcon>
                             Profile
                         </MenuItem>
-                        <MenuItem onClick={goToCreateRecord}>
+                        <MenuItem onClick={goToCreateRecord} className="menu-item">
                             <ListItemIcon>
                                 <PostAddTwoToneIcon /> 
                             </ListItemIcon>
                             Create Record
                         </MenuItem>
-                        <MenuItem onClick={goToViewRecord}>
+                        <MenuItem onClick={goToViewRecord} className="menu-item">
                             <ListItemIcon>
                                 <TableViewTwoToneIcon /> 
                             </ListItemIcon>
                             View Records
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={signOut}>
+                        <MenuItem onClick={signOut} className="menu-item">
                             <ListItemIcon>
                                 <Logout/>
                             </ListItemIcon>

@@ -12,7 +12,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useState } from 'react';
+import Divider from '@mui/material/Divider';
 import CardNote from './CardNote';
 
 function GameRecordGrid(data) {
@@ -52,11 +52,12 @@ function GameRecordGrid(data) {
                                     className="card-image-url"
                                     image={game.image_url}
                                 />
-                                <Box sx={{ display: 'flex' }}>
+                                <Box className="card-box">
                                     <CardContent className="card-content">
                                         <div className='card-game-name'>
                                             {game.name}
                                         </div>
+                                        <Divider />
                                         <div className='status-list'>
                                             <div className='status'>
                                                 Bought {game.bought ? <CheckCircleIcon fontSize="small" /> : <CancelIcon fontSize="small" />}

@@ -49,12 +49,17 @@
 .card-note-text{
     background-color: #f1b24b;
     color: #50717b;
+    padding: 20px;
 }
 
 .grid-item .grid-card .card-game-name{
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
+}
+
+.grid-card .status-list{
+    margin-top: 10px;
 }
 
 .grid-card .status-list .status{
@@ -70,6 +75,10 @@
 .card-btn-list{
     position: absolute; 
     bottom: 5px; 
+}
+
+.card-box{
+    display: flex;
 }
 
 .records-box{

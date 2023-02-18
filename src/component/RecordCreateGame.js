@@ -111,7 +111,15 @@ function RecordCreateGame() {
             blue: {
                 main: '#4bb39a',
                 dark: '#60a0b0',
-            }
+            },
+            white: {
+                main: '#fff',
+                dark: '#fff',
+            },
+            darkblue: {
+                main: '#50717b',
+                dark: '#50717b',
+            },
         },
     });
 
@@ -125,12 +133,13 @@ function RecordCreateGame() {
     }
 
     return (
-        <div>
+        <div className='record-create-game'>
             <ThemeProvider theme={theme}>
                 <div className='instruction'>
                     Press "SEARCH GAME" to find the game you would like to add.
                 </div>
                 <Button
+                    className='search-btn'
                     variant="contained"
                     color="blue"
                     onClick={handleSearchClickOpen}
@@ -143,16 +152,11 @@ function RecordCreateGame() {
                 <Dialog
                     open={searchOpen}
                     onClose={handleSearchClose}
+                    className="dialog"
                 >
-                    <DialogTitle sx={{
-                        backgroundColor: "#8ecccc",
-                        color: "#50717b"
-                    }}>Search Game</DialogTitle>
-                    <DialogContent sx={{
-                        backgroundColor: "#8ecccc",
-                        color: "#50717b"
-                    }}>
-                        <DialogContentText>
+                    <DialogTitle className='dialog-title'>Search Game</DialogTitle>
+                    <DialogContent className='dialog-content'>
+                        <DialogContentText className='dialog-content-text'>
                             To search a game, please enter keyword here.
                         </DialogContentText>
                         <TextField
@@ -161,37 +165,29 @@ function RecordCreateGame() {
                             id="title"
                             label="Title"
                             type="text"
+                            color='white'
                             fullWidth
                             variant="standard"
                             value={searchTerm}
                             onChange={setTerm}
                         />
                     </DialogContent>
-                    <DialogActions sx={{
-                        backgroundColor: "#8ecccc",
-                        color: "#50717b"
-                    }}>
-                        <Button onClick={handleSearchClose}>Cancel</Button>
-                        <Button onClick={handleSearch}>Search</Button>
+                    <DialogActions className='dialog-actions'>
+                        <Button color="darkblue" className='dialog-action-btn' onClick={handleSearchClose}>Cancel</Button>
+                        <Button color="darkblue" className='dialog-action-btn' onClick={handleSearch}>Search</Button>
                     </DialogActions>
                 </Dialog>
                 <Dialog
                     open={listOpen}
                     onClose={handleListClose}
+                    className="dialog"
                 >
-                    <DialogTitle sx={{
-                        backgroundColor: "#8ecccc",
-                        color: "#50717b"
-                    }}>Game List</DialogTitle>
-                    <DialogContent sx={{
-                        backgroundColor: "#8ecccc",
-                        color: "#50717b"
-                    }}>
-                        <DialogContentText>
-                            choose the game you would like to add
+                    <DialogTitle className='dialog-title'>Game List</DialogTitle>
+                    <DialogContent className='dialog-content'>
+                        <DialogContentText className='dialog-content-text'>
+                            Choose the game you would like to add
                             {searchGameList.map((game, i) => {
-                                console.log(game);
-                                // Return the element. Also pass key     
+                                console.log(game);  
                                 return (
                                     <div className={selectedGame == game ? 'game-detail selected' : 'game-detail'} onClick={() => handleGameSelect(game)}>
                                         <img className='game-thumbnail' src={game.box_art_url} />
@@ -201,12 +197,9 @@ function RecordCreateGame() {
                             })}
                         </DialogContentText>
                     </DialogContent>
-                    <DialogActions sx={{
-                        backgroundColor: "#8ecccc",
-                        color: "#50717b"
-                    }}>
-                        <Button onClick={handleListClose}>Cancel</Button>
-                        <Button onClick={submitChooseGame}>Choose</Button>
+                    <DialogActions className='dialog-actions'>
+                        <Button color="darkblue" className='dialog-action-btn' onClick={handleListClose}>Cancel</Button>
+                        <Button color="darkblue" className='dialog-action-btn' onClick={submitChooseGame}>Choose</Button>
                     </DialogActions>
                 </Dialog>
             </ThemeProvider>

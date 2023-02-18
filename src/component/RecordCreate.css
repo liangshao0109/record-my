@@ -1,7 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 .type-list button{
     margin: 10px 0;
 }
 
 .type-list button svg{
     margin-right: 5px;
+}
+
+.toggle-btn-group .toggle-btn{
+    color: #fff;
+    min-width: 200px;
+    font-family: 'Itim', cursive;
+}
+
+.submit-btn{
+    font-family: 'Itim', cursive;
 }

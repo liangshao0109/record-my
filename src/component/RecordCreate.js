@@ -30,8 +30,9 @@ function RecordCreate() {
     });
 
     const submitType = () => {
+        //TODO: show error text when user didn't choose a type
         if(formats){
-            window.location.href = '/create-record/' + formats
+            window.location.href = `/create-record/${formats}`;
         }
     }
 
@@ -44,16 +45,13 @@ function RecordCreate() {
                         value={formats}
                         exclusive
                         onChange={handleFormat}
-                        aria-label="text formatting"
+                        className='toggle-btn-group'
                     >
                         <ToggleButton
                             value="1"
                             aria-label="game"
                             color="brown"
-                            sx={{
-                                color: '#fff',
-                                minWidth: '200px'
-                            }}>
+                            className='toggle-btn'>
                             <SportsEsportsTwoToneIcon />
                             game
                         </ToggleButton>
@@ -61,10 +59,7 @@ function RecordCreate() {
                             value="2"
                             aria-label="novel"
                             color="brown"
-                            sx={{
-                                color: '#fff',
-                                minWidth: '200px'
-                            }}>
+                            className='toggle-btn'>
                             <ImportContactsTwoToneIcon />
                             novel
                         </ToggleButton>
@@ -72,10 +67,7 @@ function RecordCreate() {
                             value="3"
                             aria-label="series"
                             color="brown"
-                            sx={{
-                                color: '#fff',
-                                minWidth: '200px'
-                            }}>
+                            className='toggle-btn'>
                             <MovieCreationTwoToneIcon />
                             movie series
                         </ToggleButton>
@@ -85,6 +77,7 @@ function RecordCreate() {
                 <Button 
                     variant="contained" 
                     color="blue" 
+                    className='submit-btn'
                     endIcon={<SendIcon />}
                     onClick={submitType}>
                     Send

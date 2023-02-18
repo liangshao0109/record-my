@@ -49,8 +49,8 @@ function RecordCreateGameForm(data) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         var newGameRecords = [];
-        let uid = data.user.uid
         // TODO: hadle same game?
+        // TODO: validation
         const game = {
             "name": gameName,
             "image_url": gameImageURL,
@@ -72,7 +72,7 @@ function RecordCreateGameForm(data) {
             "games": newGameRecords
         });
 
-        window.location.href = "/create-record";
+        window.location.href = "/view-records";
     }
 
     const handleImageUrlInput = (e) => {
@@ -110,7 +110,7 @@ function RecordCreateGameForm(data) {
                     <div className='game-form-input'>
                         <TextField
                             fullWidth
-                            id="image-uel-link"
+                            id="image-url-link"
                             label="Game Image Link"
                             variant="outlined"
                             color="white"
@@ -132,40 +132,40 @@ function RecordCreateGameForm(data) {
                     </div>
                     <div className='game-form-input'>
                         <FormControl fullWidth>
-                            <FormLabel id="bought" color="white">Bought?</FormLabel>
+                            <FormLabel className="form-label" id="bought" color="white">Bought?</FormLabel>
                             <RadioGroup
                                 row
                                 name="bought"
                                 onChange={handleBoughtInput}
                             >
-                                <FormControlLabel value="true" control={<Radio color="white" />} label="Yes" />
-                                <FormControlLabel value="false" control={<Radio color="white" />} label="Not yet" />
+                                <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
+                                <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
                             </RadioGroup>
                         </FormControl>
                     </div>
                     <div className='game-form-input'>
                         <FormControl fullWidth>
-                            <FormLabel id="played" color="white">Played?</FormLabel>
+                            <FormLabel className="form-label" id="played" color="white">Played?</FormLabel>
                             <RadioGroup
                                 row
                                 name="played"
                                 onChange={handlePlayedInput}
                             >
-                                <FormControlLabel value="true" control={<Radio color="white" />} label="Yes" />
-                                <FormControlLabel value="false" control={<Radio color="white" />} label="Not yet" />
+                                <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
+                                <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
                             </RadioGroup>
                         </FormControl>
                     </div>
                     <div className='game-form-input'>
                         <FormControl fullWidth>
-                            <FormLabel id="completed" color="white">Completed?</FormLabel>
+                            <FormLabel className="form-label" id="completed" color="white">Completed?</FormLabel>
                             <RadioGroup
                                 row
                                 name="completed"
                                 onChange={handleCompletedInput}
                             >
-                                <FormControlLabel value="true" control={<Radio color="white" />} label="Yes" />
-                                <FormControlLabel value="false" control={<Radio color="white" />} label="Not yet" />
+                                <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
+                                <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
                             </RadioGroup>
                         </FormControl>
                     </div>
@@ -182,6 +182,7 @@ function RecordCreateGameForm(data) {
                     </div>
                     <div className='game-form-submit'>
                         <Button
+                            className='form-btn'
                             type="button"
                             variant="outlined"
                             color="white"
@@ -190,6 +191,7 @@ function RecordCreateGameForm(data) {
                             Cancel
                         </Button>
                         <Button
+                            className='form-btn'
                             type="submit"
                             variant="contained"
                             color="blue"
