@@ -21,6 +21,7 @@
 
 .header-banner .logo {
     flex: 1;
+    cursor: pointer;
 }
 
 .header-banner .auth-btn{
@@ -29,6 +30,5 @@
 
 .header-banner .profile{
     align-self: center;
-    /* cursor: pointer; */
 }
 

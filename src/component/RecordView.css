@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+.record-title{
+    font-size: 50px;
+    margin-top: 20px;
+    color: #50717b
+}
+
+.game-record-list .title{
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 40px;
+    font-weight: bold;
+    color: #50717b;
+    display: flex;
+    align-items: center;
+}
+
+.game-record-list .list-grid{
+    max-width: 80%;
+    margin: 0 auto 20px auto;
+}
+
+.game-record-list .grid-item{
+    min-width: 300px;
+}
+
+.grid-item .grid-card {
+    display: flex;
+    min-height: 200px;
+    text-align: left;
+    background-color: #8ecccc;
+}
+
+.grid-item .grid-card .card-image-url{
+    max-width: 120px;
+}
+
+.grid-item .grid-card .card-game-name, .grid-item .grid-card .card-btn{
+    font-family: 'Itim', cursive;
+}
+
+.card-note{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.card-note-text{
+    background-color: #f1b24b;
+    color: #50717b;
+}
+
+.grid-item .grid-card .card-game-name{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.grid-card .status-list .status{
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.card-content{
+    position: relative;
+}
+
+.card-btn-list{
+    position: absolute; 
+    bottom: 5px; 
+}
+
+.records-box{
+    width: 80%;
+    margin: 0 auto;
+    color: #50717b;
+}
+
+.record-tabs .css-1aquho2-MuiTabs-indicator{
+    background-color: #50717b;
+}
+
+.record-tabs .record-tab{
+    font-size: 22px;
+    font-family: 'Itim', cursive;
+}
+
+.record-list .fab-add{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #fff;
+}

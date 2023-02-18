@@ -15,6 +15,7 @@ import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Logout from '@mui/icons-material/Logout';
 import PostAddTwoToneIcon from '@mui/icons-material/PostAddTwoTone';
+import TableViewTwoToneIcon from '@mui/icons-material/TableViewTwoTone';
 
 function Header() {
     const SignInButton = () => (
@@ -37,6 +38,9 @@ function Header() {
         };
         const goToCreateRecord = () => {
             window.location.href = "/create-record";
+        }
+        const goToViewRecord = () => {
+            window.location.href = "/view-records";
         }
 
         return (
@@ -103,6 +107,12 @@ function Header() {
                             </ListItemIcon>
                             Create Record
                         </MenuItem>
+                        <MenuItem onClick={goToViewRecord}>
+                            <ListItemIcon>
+                                <TableViewTwoToneIcon /> 
+                            </ListItemIcon>
+                            View Records
+                        </MenuItem>
                         <Divider />
                         <MenuItem onClick={signOut}>
                             <ListItemIcon>
@@ -131,9 +141,13 @@ function Header() {
         },
     });
 
+    const goToHomepage = () => {
+        window.location.href = "/";
+    }
+
     return (
         <div className="header-banner">
-            <div className='logo'>
+            <div className='logo' onClick={goToHomepage}>
                 <AppRegistrationIcon />RecordMy
             </div>
             <div className='auth-btn'>

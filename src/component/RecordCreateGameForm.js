@@ -20,8 +20,8 @@ function RecordCreateGameForm(data) {
     const [gamePlayed, setGamePlayed] = useState(false);
     const [gameCompleted, setGameCompleted] = useState(false);
     const [gameNote, setGameNote] = useState(null);
-    const [games, error] = useDbData(`/games/${data.user.uid}`);
-    const [update, result] = useDbUpdate(`/games/`);
+    const [games, error] = useDbData(`/${data.user.uid}/games`);
+    const [update, result] = useDbUpdate(`/${data.user.uid}`);
 
     useEffect(() => {
         if (data.game != null) {
@@ -69,7 +69,7 @@ function RecordCreateGameForm(data) {
         }
 
         update({
-            [uid]: newGameRecords
+            "games": newGameRecords
         });
 
         window.location.href = "/create-record";
