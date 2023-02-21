@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+.novel-form{
+    margin: 20px 0;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.6);
+    min-width: 500px;
+}
+
+.novel-form-input{
+    margin: 10px 0;
+    font-family: 'Itim', cursive;
+}
+
+#novel-name,
+#novel-name-label,
+#novel-link,
+#novel-link-label,
+#latest-chapter,
+#latest-chapter-label
+{
+    font-family: 'Itim', cursive;
+}
+
+.novel-form-submit{
+    color: #fff;
+    text-align: center;
+}
+
+.novel-form-submit button{
+    margin: 0 5px;
+}

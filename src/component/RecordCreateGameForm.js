@@ -53,12 +53,13 @@ function RecordCreateGameForm(data) {
         var newId = 0;
        
         if(games){
-            newId = games[games.length - 1].id + 1;
+            const sortedGameRecords = games.sort((a, b) => b.id - a.id);
+            newId = sortedGameRecords[0].id + 1;
         }
         // TODO: hadle same game?
         // TODO: validation
 
-        const game = {
+        const gameRecord = {
             "id": newId,
             "name": gameName,
             "image_url": gameImageURL,
@@ -69,11 +70,12 @@ function RecordCreateGameForm(data) {
             "created_at": Date.now(),
             "updated_at": Date.now()
         }
+        
         if (games != null) {
             newGameRecords = games;
-            newGameRecords.push(game);
+            newGameRecords.push(gameRecord);
         } else {
-            newGameRecords = [game];
+            newGameRecords = [gameRecord];
         }
 
         update({
@@ -145,6 +147,7 @@ function RecordCreateGameForm(data) {
                                 row
                                 name="bought"
                                 onChange={handleBoughtInput}
+                                value={gameBought ? "true" : "false"}
                             >
                                 <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
                                 <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
@@ -158,6 +161,7 @@ function RecordCreateGameForm(data) {
                                 row
                                 name="played"
                                 onChange={handlePlayedInput}
+                                value={gamePlayed ? "true" : "false"}
                             >
                                 <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
                                 <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
@@ -171,6 +175,7 @@ function RecordCreateGameForm(data) {
                                 row
                                 name="completed"
                                 onChange={handleCompletedInput}
+                                value={gameCompleted ? "true" : "false"}
                             >
                                 <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
                                 <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
@@ -186,6 +191,7 @@ function RecordCreateGameForm(data) {
                             fullWidth
                             rows={4}
                             onChange={handleNoteInput}
+                            value={gameNote}
                         />
                     </div>
                     <div className='game-form-submit'>

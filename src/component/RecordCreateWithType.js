@@ -1,5 +1,6 @@
 import {useParams} from "react-router-dom";
-import RecordCreateGame from './RecordCreateGame'
+import RecordCreateGame from './RecordCreateGame';
+import RecordCreateNovel from './RecordCreateNovel';
 
 function RecordCreateWithType() {
     const {typeId} = useParams()
@@ -10,9 +11,7 @@ function RecordCreateWithType() {
         );
     }else if(typeId == 2){
         return (
-            <div>
-                hi2
-            </div>
+            <RecordCreateNovel />
         );
     }else{
         return (

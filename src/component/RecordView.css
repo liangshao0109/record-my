@@ -8,7 +8,6 @@
 
 
 .game-record-list{
-    width: 90%;
     margin: 0 auto;
 }
 
@@ -23,11 +22,15 @@
     align-items: center;
 }
 
-.game-record-list .list-grid{
-    margin: 0 auto 20px auto;
+.game-record-list .list-grid,
+.novel-record-list .list-grid
+{
+    margin-top: 20px;
 }
 
-.game-record-list .grid-item{
+.game-record-list .grid-item,
+.novel-record-list .grid-item
+{
     min-width: 300px;
 }
 
@@ -36,6 +39,10 @@
     min-height: 200px;
     text-align: left;
     background-color: #8ecccc;
+}
+
+.novel-record-list .grid-item .grid-card{
+    display: list-item;
 }
 
 .grid-item .grid-card .card-image-url{
@@ -109,5 +116,9 @@
 
 .no-record-text{
     margin-top: 20px;
+    font-size: 20px;
+}
+
+.card-latest-chapter{
     font-size: 20px;
 }

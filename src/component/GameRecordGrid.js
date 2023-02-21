@@ -16,16 +16,16 @@ import Divider from '@mui/material/Divider';
 import CardNote from './CardNote';
 
 function GameRecordGrid(data) {
-    const [records, error] = useDbData(`/${data.user.uid}`);
+    const [games, error] = useDbData(`/${data.user.uid}/games`);
     const [update, result] = useDbUpdate(`/${data.user.uid}`);
 
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
-    if (records === undefined) return <div><CircularProgress color="inherit" /></div>;
-    if (!records) return <div className='no-record-text'>No game records found, please click the add button on the bottom right corner to add records.</div>;
+    if (games === undefined) return <div><CircularProgress color="inherit" /></div>;
+    if (!games) return <div className='no-record-text'>No game records found, please click the add button on the bottom right corner to add records.</div>;
 
-    console.log(records);
+    console.log(games);
 
-    const sortedGameRecords = records.games.sort((a, b) => b.updated_at - a.updated_at);
+    const sortedGameRecords = games.sort((a, b) => b.updated_at - a.updated_at);
     
     const theme = createTheme({
         palette: {
@@ -41,7 +41,7 @@ function GameRecordGrid(data) {
     });
 
     const deleteGameRecordById = (id) => {
-        const newGameList = records.games.filter( game => game.id != id)
+        const newGameList = games.filter( game => game.id != id)
 
         update({
             "games": newGameList
