@@ -8,6 +8,7 @@ import Header from './component/Header';
 import RecordCreate from './component/RecordCreate';
 import RecordCreateWithType from './component/RecordCreateWithType';
 import RecordView from './component/RecordView';
+import RecordEdit from './component/RecordEdit';
 
 function App() {
 
@@ -26,7 +27,11 @@ function App() {
     },
     {
       path: "/view-records",
-      element: <RecordView/>
+      element: <RecordView />
+    },
+    {
+      path: "/record/:typeId/edit/:id",
+      element: <RecordEdit />
     }
   ]);
 

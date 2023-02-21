@@ -1,3 +1,5 @@
+import { useDbData, useDbUpdate } from "../utilities/firebase";
+import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import './RecordCreateGameForm.css';
 import Radio from '@mui/material/Radio';
@@ -9,30 +11,23 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { useDbData, useDbUpdate } from "../utilities/firebase";
-import CircularProgress from '@mui/material/CircularProgress';
 
 
-function RecordCreateGameForm(data) {
+function RecordEditGameForm(data) {
+    const [game, error] = useDbData(`/${data.user.uid}/games/${data.id}`);
+
     const [gameImageURL, setGameImageUrl] = useState('');
     const [gameName, setGameName] = useState('');
     const [gameBought, setGameBought] = useState(false);
     const [gamePlayed, setGamePlayed] = useState(false);
     const [gameCompleted, setGameCompleted] = useState(false);
     const [gameNote, setGameNote] = useState(null);
-    const [games, error] = useDbData(`/${data.user.uid}/games`);
-    const [update, result] = useDbUpdate(`/${data.user.uid}`);
     const [init, setInit] = useState(false);
+    const [update, result] = useDbUpdate(`/${data.user.uid}/games/${data.id}`);
 
 
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
-    if (games === undefined) return <div><CircularProgress color="inherit" /></div>;
-
-    if(!init){
-        setGameImageUrl(data.game.box_art_url);
-            setGameName(data.game.name);
-        setInit(true);
-    }
+    if (game === undefined) return <div><CircularProgress color="inherit" /></div>;
 
     const theme = createTheme({
         palette: {
@@ -49,29 +44,19 @@ function RecordCreateGameForm(data) {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        var newGameRecords = [];
-        // TODO: hadle same game?
-        // TODO: validation
-        const game = {
+
+        const updatedGameRecord = {
             "name": gameName,
             "image_url": gameImageURL,
             "bought": gameBought,
             "played": gamePlayed,
             "completed": gameCompleted,
             "note": gameNote,
-            "created_at": Date.now(),
+            "created_at": game.created_at,
             "updated_at": Date.now()
         }
-        if (games != null) {
-            newGameRecords = games;
-            newGameRecords.push(game);
-        } else {
-            newGameRecords = [game];
-        }
 
-        update({
-            "games": newGameRecords
-        });
+        update(updatedGameRecord);
 
         window.location.href = "/view-records";
     }
@@ -101,11 +86,22 @@ function RecordCreateGameForm(data) {
     }
 
     const handleCancel = (e) => {
-        window.location.href = "/create-record";
+        window.location.href = "/view-records";
+    }
+
+    if(!init){
+        setGameImageUrl(game.image_url);
+        setGameName(game.name);
+        setGameBought(game.bought);
+        setGamePlayed(game.played);
+        setGameCompleted(game.completed);
+        setGameNote(game.note);
+        setInit(true);
     }
 
     return (
         <div className='game-form'>
+            <div className="title">Edit Record</div>
             <ThemeProvider theme={theme}>
                 <form onSubmit={handleSubmit}>
                     <div className='game-form-input'>
@@ -138,6 +134,7 @@ function RecordCreateGameForm(data) {
                                 row
                                 name="bought"
                                 onChange={handleBoughtInput}
+                                value={gameBought ? "true" : "false"}
                             >
                                 <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
                                 <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
@@ -151,6 +148,7 @@ function RecordCreateGameForm(data) {
                                 row
                                 name="played"
                                 onChange={handlePlayedInput}
+                                value={gamePlayed ? "true" : "false"}
                             >
                                 <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
                                 <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
@@ -164,6 +162,7 @@ function RecordCreateGameForm(data) {
                                 row
                                 name="completed"
                                 onChange={handleCompletedInput}
+                                value={gameCompleted ? "true" : "false"}
                             >
                                 <FormControlLabel className="form-control-label" value="true" control={<Radio color="white" />} label="Yes" />
                                 <FormControlLabel className="form-control-label" value="false" control={<Radio color="white" />} label="Not yet" />
@@ -179,6 +178,7 @@ function RecordCreateGameForm(data) {
                             fullWidth
                             rows={4}
                             onChange={handleNoteInput}
+                            value={gameNote}
                         />
                     </div>
                     <div className='game-form-submit'>
@@ -208,4 +208,4 @@ function RecordCreateGameForm(data) {
     );
 }
 
-export default RecordCreateGameForm;
+export default RecordEditGameForm;

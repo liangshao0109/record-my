@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import { useDbData } from "../utilities/firebase";
+import { useDbData, useDbUpdate } from "../utilities/firebase";
 import CircularProgress from '@mui/material/CircularProgress';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -17,6 +17,7 @@ import CardNote from './CardNote';
 
 function GameRecordGrid(data) {
     const [records, error] = useDbData(`/${data.user.uid}`);
+    const [update, result] = useDbUpdate(`/${data.user.uid}`);
 
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
     if (records === undefined) return <div><CircularProgress color="inherit" /></div>;
@@ -35,7 +36,19 @@ function GameRecordGrid(data) {
         },
     });
 
+    const deleteGameRecordByName = (gameName) => {
+        console.log(gameName);
+        const newGameList = records.games.filter( game => game.name !== gameName)
 
+        update({
+            "games": newGameList
+        });
+
+    }
+
+    const editGameRecordById = (id) => {
+        window.location.href = `/record/1/edit/${id}`
+    }
 
 
     return (
@@ -73,8 +86,12 @@ function GameRecordGrid(data) {
                                             <CardNote note={game.note} />
                                             
                                             <div className='card-btn-list'>
-                                                <Button size="small" color="blue" className='card-btn'><EditIcon fontSize="small" /></Button>
-                                                <Button size="small" color="red" className='card-btn'><DeleteIcon fontSize="small" /></Button>
+                                                <Button size="small" color="blue" className='card-btn' onClick={() => editGameRecordById(index)}>
+                                                    <EditIcon fontSize="small" />
+                                                </Button>
+                                                <Button size="small" color="red" className='card-btn' onClick={() => deleteGameRecordByName(game.name)}>
+                                                    <DeleteIcon fontSize="small" />
+                                                </Button>
                                             </div>
                                         </ThemeProvider>
 
