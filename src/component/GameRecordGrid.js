@@ -21,8 +21,12 @@ function GameRecordGrid(data) {
 
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
     if (records === undefined) return <div><CircularProgress color="inherit" /></div>;
+    if (!records) return <div className='no-record-text'>No game records found, please click the add button on the bottom right corner to add records.</div>;
 
     console.log(records);
+
+    const sortedGameRecords = records.games.sort((a, b) => b.updated_at - a.updated_at);
+    
     const theme = createTheme({
         palette: {
             blue: {
@@ -36,9 +40,8 @@ function GameRecordGrid(data) {
         },
     });
 
-    const deleteGameRecordByName = (gameName) => {
-        console.log(gameName);
-        const newGameList = records.games.filter( game => game.name !== gameName)
+    const deleteGameRecordById = (id) => {
+        const newGameList = records.games.filter( game => game.id != id)
 
         update({
             "games": newGameList
@@ -54,10 +57,10 @@ function GameRecordGrid(data) {
     return (
         <div className="game-record-list">
             <Grid container spacing={1} className="list-grid">
-                {records.games.map((game, index) => {
+                {sortedGameRecords.map((game) => {
                     console.log(game);
                     return (
-                        <Grid item xs={12} sm={4} key={index} className="grid-item">
+                        <Grid item xs={12} sm={6} key={game.id} className="grid-item">
                             <Card className='grid-card'>
                                 <CardMedia
                                     component="img"
@@ -86,10 +89,10 @@ function GameRecordGrid(data) {
                                             <CardNote note={game.note} />
                                             
                                             <div className='card-btn-list'>
-                                                <Button size="small" color="blue" className='card-btn' onClick={() => editGameRecordById(index)}>
+                                                <Button size="small" color="blue" className='card-btn' onClick={() => editGameRecordById(game.id)}>
                                                     <EditIcon fontSize="small" />
                                                 </Button>
-                                                <Button size="small" color="red" className='card-btn' onClick={() => deleteGameRecordByName(game.name)}>
+                                                <Button size="small" color="red" className='card-btn' onClick={() => deleteGameRecordById(game.id)}>
                                                     <DeleteIcon fontSize="small" />
                                                 </Button>
                                             </div>

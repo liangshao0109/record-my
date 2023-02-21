@@ -28,9 +28,9 @@ function RecordCreateGameForm(data) {
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
     if (games === undefined) return <div><CircularProgress color="inherit" /></div>;
 
-    if(!init){
+    if(data.game && !init ){
         setGameImageUrl(data.game.box_art_url);
-            setGameName(data.game.name);
+        setGameName(data.game.name);
         setInit(true);
     }
 
@@ -50,9 +50,16 @@ function RecordCreateGameForm(data) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         var newGameRecords = [];
+        var newId = 0;
+       
+        if(games){
+            newId = games[games.length - 1].id + 1;
+        }
         // TODO: hadle same game?
         // TODO: validation
+
         const game = {
+            "id": newId,
             "name": gameName,
             "image_url": gameImageURL,
             "bought": gameBought,

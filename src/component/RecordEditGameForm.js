@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 
 function RecordEditGameForm(data) {
-    const [game, error] = useDbData(`/${data.user.uid}/games/${data.id}`);
+    const [games, error] = useDbData(`/${data.user.uid}/games`);
 
     const [gameImageURL, setGameImageUrl] = useState('');
     const [gameName, setGameName] = useState('');
@@ -23,11 +23,14 @@ function RecordEditGameForm(data) {
     const [gameCompleted, setGameCompleted] = useState(false);
     const [gameNote, setGameNote] = useState(null);
     const [init, setInit] = useState(false);
-    const [update, result] = useDbUpdate(`/${data.user.uid}/games/${data.id}`);
+    const [update, result] = useDbUpdate(`/${data.user.uid}`);
 
 
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
-    if (game === undefined) return <div><CircularProgress color="inherit" /></div>;
+    if (games === undefined) return <div><CircularProgress color="inherit" /></div>;
+
+    const game = games.filter( game => game.id == data.id)[0];
+    const restGames = games.filter( game => game.id != data.id);
 
     const theme = createTheme({
         palette: {
@@ -46,6 +49,7 @@ function RecordEditGameForm(data) {
         evt.preventDefault();
 
         const updatedGameRecord = {
+            "id": game.id,
             "name": gameName,
             "image_url": gameImageURL,
             "bought": gameBought,
@@ -56,7 +60,11 @@ function RecordEditGameForm(data) {
             "updated_at": Date.now()
         }
 
-        update(updatedGameRecord);
+        restGames.push(updatedGameRecord);
+
+        update({
+            "games" : restGames
+        });
 
         window.location.href = "/view-records";
     }

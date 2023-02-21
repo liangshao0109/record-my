@@ -6,6 +6,12 @@
     color: #50717b
 }
 
+
+.game-record-list{
+    width: 90%;
+    margin: 0 auto;
+}
+
 .game-record-list .title{
     text-align: left;
     width: 80%;
@@ -18,7 +24,6 @@
 }
 
 .game-record-list .list-grid{
-    max-width: 80%;
     margin: 0 auto 20px auto;
 }
 
@@ -43,7 +48,6 @@
 
 .card-note{
     margin-bottom: 10px;
-    text-align: center;
 }
 
 .card-note-text{
@@ -101,4 +105,9 @@
     bottom: 20px;
     right: 20px;
     color: #fff;
+}
+
+.no-record-text{
+    margin-top: 20px;
+    font-size: 20px;
 }
