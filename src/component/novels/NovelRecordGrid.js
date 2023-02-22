@@ -1,19 +1,17 @@
-import './RecordView.css';
+import '../RecordView.css';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import { useDbData, useDbUpdate } from "../utilities/firebase";
+import { useDbData, useDbUpdate } from "../../utilities/firebase";
 import CircularProgress from '@mui/material/CircularProgress';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
-import CardNote from './CardNote';
+import CardNote from '../CardNote';
 
 function NovelRecordGrid(data) {
     const [novels, error] = useDbData(`/${data.user.uid}/novels`);

@@ -2,7 +2,7 @@
 import './RecordView.css';
 import { useAuthState } from '../utilities/firebase';
 import CircularProgress from '@mui/material/CircularProgress';
-import GameRecordGrid from './GameRecordGrid';
+import GameRecordGrid from './games/GameRecordGrid';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -12,7 +12,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import NovelRecordGrid from './NovelRecordGrid';
+import NovelRecordGrid from './novels/NovelRecordGrid';
 
 function RecordView() {
     const [user] = useAuthState();

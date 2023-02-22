@@ -8,10 +8,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import './RecordCreateGame.css';
-import RecordCreateGameForm from './RecordCreateGameForm';
-import { useAuthState } from '../utilities/firebase';
+import { useAuthState } from '../../utilities/firebase';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import RecordGameForm from './RecordGameForm'; 
 
 function RecordCreateGame() {
     const [searchOpen, setSearchOpen] = useState(false);
@@ -147,7 +146,7 @@ function RecordCreateGame() {
                     Search Game
                 </Button>
                 {
-                    user ? <RecordCreateGameForm game={choosedGame} user={user} /> : <div><CircularProgress color="inherit" /></div>
+                    user ? <RecordGameForm choosedGame={choosedGame} user={user} mode="Create" /> : <div><CircularProgress color="inherit" /></div>
                 }
                 <Dialog
                     open={searchOpen}
@@ -187,7 +186,6 @@ function RecordCreateGame() {
                         <DialogContentText className='dialog-content-text'>
                             Choose the game you would like to add
                             {searchGameList.map((game, i) => {
-                                console.log(game);  
                                 return (
                                     <div className={selectedGame == game ? 'game-detail selected' : 'game-detail'} onClick={() => handleGameSelect(game)}>
                                         <img className='game-thumbnail' src={game.box_art_url} />

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useAuthState } from '../utilities/firebase';
 import CircularProgress from '@mui/material/CircularProgress';
-import RecordEditGameForm from './RecordEditGameForm';
-import RecordEditNovelForm from './RecordEditNovelForm';
+import RecordGameForm from './games/RecordGameForm';
+import RecordNovelForm from './novels/RecordNovelForm';
 
 function RecordEdit() {
     const { typeId } = useParams()
@@ -13,7 +13,7 @@ function RecordEdit() {
         return (
             <div>
                 {
-                    user ? <RecordEditGameForm id={id} user={user} /> : <div><CircularProgress color="inherit" /></div>
+                    user ? <RecordGameForm id={id} user={user} mode="Edit" /> : <div><CircularProgress color="inherit" /></div>
                 }
             </div>
         );
@@ -21,7 +21,7 @@ function RecordEdit() {
         return (
             <div>
                 {
-                    user ? <RecordEditNovelForm id={id} user={user} /> : <div><CircularProgress color="inherit" /></div>
+                    user ? <RecordNovelForm id={id} user={user} mode="Edit" /> : <div><CircularProgress color="inherit" /></div>
                 }
             </div>
         );

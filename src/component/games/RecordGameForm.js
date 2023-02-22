@@ -1,36 +1,34 @@
-import { useDbData, useDbUpdate } from "../utilities/firebase";
+import { useState } from 'react';
+import { useDbData, useDbUpdate } from "../../utilities/firebase";
 import CircularProgress from '@mui/material/CircularProgress';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import './RecordGameForm.css';
 import TextField from '@mui/material/TextField';
-import './RecordCreateGameForm.css';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
 
-
-function RecordEditGameForm(data) {
+function RecordGameForm(data) {
+    console.log(data)
     const [games, error] = useDbData(`/${data.user.uid}/games`);
+    const [update, result] = useDbUpdate(`/${data.user.uid}`);
+    const [init, setInit] = useState(false);
 
     const [gameImageURL, setGameImageUrl] = useState('');
     const [gameName, setGameName] = useState('');
     const [gameBought, setGameBought] = useState(false);
     const [gamePlayed, setGamePlayed] = useState(false);
     const [gameCompleted, setGameCompleted] = useState(false);
-    const [gameNote, setGameNote] = useState(null);
-    const [init, setInit] = useState(false);
-    const [update, result] = useDbUpdate(`/${data.user.uid}`);
-
+    const [gameNote, setGameNote] = useState('');
 
     if (error) return <h1>Error loading data: {error.toString()}</h1>;
     if (games === undefined) return <div><CircularProgress color="inherit" /></div>;
 
-    const game = games.filter( game => game.id == data.id)[0];
-    const restGames = games.filter( game => game.id != data.id);
+    var game = null;
 
     const theme = createTheme({
         palette: {
@@ -45,28 +43,22 @@ function RecordEditGameForm(data) {
         },
     });
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
+    if (!init) {
+        if (data.mode == 'Create' && data.choosedGame) {
+            setGameImageUrl(data.choosedGame.box_art_url);
+            setGameName(data.choosedGame.name);
+            setInit(true);
+        } else if (data.mode == 'Edit') {
+            game = games.filter(game => game.id == data.id)[0];
 
-        const updatedGameRecord = {
-            "id": game.id,
-            "name": gameName,
-            "image_url": gameImageURL,
-            "bought": gameBought,
-            "played": gamePlayed,
-            "completed": gameCompleted,
-            "note": gameNote,
-            "created_at": game.created_at,
-            "updated_at": Date.now()
+            setGameImageUrl(game.image_url);
+            setGameName(game.name);
+            setGameBought(game.bought);
+            setGamePlayed(game.played);
+            setGameCompleted(game.completed);
+            setGameNote(game.note);
+            setInit(true);
         }
-
-        restGames.push(updatedGameRecord);
-
-        update({
-            "games" : restGames
-        });
-
-        window.location.href = "/view-records";
     }
 
     const handleImageUrlInput = (e) => {
@@ -94,22 +86,66 @@ function RecordEditGameForm(data) {
     }
 
     const handleCancel = (e) => {
-        window.location.href = "/view-records";
+        if (data.mode == 'Create') {
+            window.location.href = "/create-record";
+        } else if (data.mode == 'Edit') {
+            window.location.href = "/view-records";
+        }
     }
 
-    if(!init){
-        setGameImageUrl(game.image_url);
-        setGameName(game.name);
-        setGameBought(game.bought);
-        setGamePlayed(game.played);
-        setGameCompleted(game.completed);
-        setGameNote(game.note);
-        setInit(true);
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        var newGameRecords = [];
+        var gameId = 0;
+
+        const gameRecord = {
+            "name": gameName,
+            "image_url": gameImageURL,
+            "bought": gameBought,
+            "played": gamePlayed,
+            "completed": gameCompleted,
+            "note": gameNote,
+            "updated_at": Date.now()
+        }
+
+        if (data.mode == 'Create') {
+            if (games) {
+                const sortedGameRecords = games.sort((a, b) => b.id - a.id);
+                gameId = sortedGameRecords[0].id + 1;
+            }
+            // TODO: hadle same game?
+            // TODO: validation
+
+            gameRecord["id"] = gameId;
+            gameRecord["created_at"] = Date.now();
+
+            if (games != null) {
+                newGameRecords = games;
+                newGameRecords.push(gameRecord);
+            } else {
+                newGameRecords = [gameRecord];
+            }
+
+        } else if (data.mode == 'Edit') {
+            game = games.filter(game => game.id == data.id)[0];
+            newGameRecords = games.filter(game => game.id != data.id);
+
+            gameRecord["id"] = data.id;
+            gameRecord["created_at"] = game.created_at;
+
+            newGameRecords.push(gameRecord);
+        }
+
+        update({
+            "games": newGameRecords
+        });
+
+        window.location.href = "/view-records";
     }
 
     return (
         <div className='game-form'>
-            <div className="title">Edit Record</div>
+            <div className="title">{data.mode} Record</div>
             <ThemeProvider theme={theme}>
                 <form onSubmit={handleSubmit}>
                     <div className='game-form-input'>
@@ -216,4 +252,4 @@ function RecordEditGameForm(data) {
     );
 }
 
-export default RecordEditGameForm;
+export default RecordGameForm;

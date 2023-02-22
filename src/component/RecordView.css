@@ -107,6 +107,10 @@
     font-family: 'Itim', cursive;
 }
 
+.record-list{
+    min-width: 80vw;
+}
+
 .record-list .fab-add{
     position: fixed;
     bottom: 20px;
